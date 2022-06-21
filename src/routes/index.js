@@ -2,13 +2,21 @@ const express = require("express");
 const router = express.Router();
 const {
   allUsers,
-  userForm,
   saveUser,
+  getUser,
+  editUser,
+  deleteUser,
 } = require("../app/controllers/UserController");
 
 router.get("/admin/user", allUsers);
-router.get("admin/user/create_user", userForm);
 router.post("/admin/user/create_user", saveUser);
+
+router.get("/admin/user/edit/:id", getUser);
+router.put("/admin/user/edit/:id", editUser);
+
+router.get("/admin/user/view/:id", getUser);
+
+router.delete("/admin/user/:id", deleteUser);
 // const app = express();
 // const port = 3001;
 // app.use(express.json());

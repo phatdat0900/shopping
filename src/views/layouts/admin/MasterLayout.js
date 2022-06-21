@@ -6,7 +6,7 @@ import "../../assets/admin/js/scripts";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-// import routes from "../../routes/routes";
+
 import Main from "../../components/admin/Main";
 
 const MasterLayout = () => {

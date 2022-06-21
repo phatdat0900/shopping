@@ -14,7 +14,7 @@ const Create = () => {
         </div>
         <div className="form-group">
           <label>Email </label>
-          <input type="email" name="email" className="form-control" />
+          <input type="email" name="mail" className="form-control" />
         </div>
         <div className="form-group">
           <label>Username</label>
