@@ -11,9 +11,6 @@ app.engine("hbs", exphbs.engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "hbs");
 app.use("/", router);
-app.get("/", (req, res) => {
-  res.render("home");
-});
 app.listen(port, () => {
   console.log(`The server is listening on port${port}`);
 });

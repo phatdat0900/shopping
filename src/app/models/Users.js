@@ -3,7 +3,7 @@ const db = require("../../db");
 
 module.exports = db.define("Users", {
   id: {
-    type: Sequelize.INTEGER(11),
+    type: Sequelize.INTEGER(1000),
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,

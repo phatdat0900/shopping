@@ -1,138 +1,100 @@
-import {
-    Facebook,
-    Instagram,
-    MailOutline,
-    Phone,
-    Pinterest,
-    Room,
-    Twitter,
-} from "@material-ui/icons";
-import styled from "styled-components";
+import React from "react";
+import { Link } from "react-router-dom";
+import Grid from "./Grid";
+import logo from "../assets/images/Logo-2.png";
 
-const Container = styled.div`
-    display: flex;
-`;
-const Left = styled.div`
-    flex: 1;
-    padding: 20px;
-`;
+const footerAboutLinks = [
+  {
+    display: "Giới thiệu",
+    path: "/about",
+  },
+  {
+    display: "Liên hệ",
+    path: "/about",
+  },
+  {
+    display: "Tuyển dụng",
+    path: "/about",
+  },
+  {
+    display: "Tin tức",
+    path: "/about",
+  },
+  {
+    display: "Hệ thống cửa hàng",
+    path: "/about",
+  },
+];
 
-const Logo = styled.h1`
-    font-weight: bold;
-`;
-
-const Desc = styled.p`
-    margin: 20px 0px;
-`;
-const SocialContainer = styled.div`
-    display: flex;
-`;
-const SocialIcon = styled.div`
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    color: white;
-    background-color: #${(props) => props.color};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-`;
-
-const Center = styled.div`
-    flex: 1;
-    padding: 20px;
-`;
-
-const Title = styled.h3`
-    margin-bottom: 3px;
-`;
-
-const List = styled.ul`
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-`;
-
-const ListItem = styled.li`
-    width: 50%;
-    margin-bottom: 10px;
-`;
-
-const Right = styled.div`
-    flex: 1;
-    padding: 20px;
-`;
-
-const ContactItem = styled.div`
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-`;
-const Payment = styled.img`
-    width: 50%;
-`;
-
+const footerCustomerLinks = [
+  {
+    display: "Chính sách đổi trả",
+    path: "/about",
+  },
+  {
+    display: "Chính sách bảo hành",
+    path: "/about",
+  },
+  {
+    display: "Chính sách hoàn tiền",
+    path: "/about",
+  },
+];
 const Footer = () => {
-    return (
-        <Container>
-            <Left>
-                <Logo>WEAR.</Logo>
-                <Desc>
-                    There are many variations of passages of Lorem Ipsum
-                    available,but the majority have suffered alteration in some
-                    form,by injected humour,or randomised words which don't look
-                    even slightly believable.
-                </Desc>
-                <SocialContainer>
-                    <SocialIcon color="3B5999">
-                        <Facebook />
-                    </SocialIcon>
-                    <SocialIcon color="E4405F">
-                        <Instagram />
-                    </SocialIcon>
-                    <SocialIcon color="55ACEE">
-                        <Twitter />
-                    </SocialIcon>
-                    <SocialIcon color="E60023">
-                        <Pinterest />
-                    </SocialIcon>
-                </SocialContainer>
-            </Left>
-            <Center>
-                <Title>Useful Links</Title>
-                <List>
-                    <ListItem>Home</ListItem>
-                    <ListItem>Cart</ListItem>
-                    <ListItem>Man Fashion</ListItem>
-                    <ListItem>Woman Fashion</ListItem>
-                    <ListItem>Accessories</ListItem>
-                    <ListItem>My Account</ListItem>
-                    <ListItem>Order Tracking</ListItem>
-                    <ListItem>Wishlist</ListItem>
-                    <ListItem>Terms</ListItem>
-                </List>
-            </Center>
-            <Right>
-                <Title>Contact</Title>
-                <ContactItem>
-                    <Room style={{ marginRight: "10px" }} />
-                    70, Cau Giay, Ha Noi
-                </ContactItem>
-                <ContactItem>
-                    <Phone style={{ marginRight: "10px" }} />
-                    +1 234 56 78
-                </ContactItem>
-                <ContactItem>
-                    <MailOutline style={{ marginRight: "10px" }} />
-                    contact@lama.dev/ContactItem
-                </ContactItem>
-                <Payment src="https://i.ibb.co/Qfvn4z6/payment.png"></Payment>
-            </Right>
-        </Container>
-    );
+  return (
+    <footer className="footer">
+      <div className="container">
+        <Grid col={4} mdCol={2} smCol={1} gap={10}>
+          <div>
+            <div className="footer__title">Tổng đài hỗ trợ</div>
+            <div className="footer__content">
+              <p>
+                Liên hệ đặt hàng <strong>0123456789</strong>
+              </p>
+              <p>
+                Thắc mắc đơn hàng <strong>0123456789</strong>
+              </p>
+              <p>
+                Góp ý, khiếu nại <strong>0123456789</strong>
+              </p>
+            </div>
+          </div>
+          <div>
+            <div className="footer__title">Về Yolo</div>
+            <div className="footer__content">
+              {footerAboutLinks.map((item, index) => (
+                <p key={index}>
+                  <Link to={item.path}>{item.display}</Link>
+                </p>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="footer__title">Chăm sóc khách hàng</div>
+            <div className="footer__content">
+              {footerCustomerLinks.map((item, index) => (
+                <p key={index}>
+                  <Link to={item.path}>{item.display}</Link>
+                </p>
+              ))}
+            </div>
+          </div>
+          <div className="footer__about">
+            <p>
+              <Link to="/">
+                <img src={logo} className="footer__logo" alt="" />
+              </Link>
+            </p>
+            <p>
+              Hướng đến mục tiêu mang lại niềm vui ăn mặc mới mỗi ngày cho hàng
+              triệu người tiêu dùng Việt. Hãy cùng Yolo hướng đến một cuộc sống
+              năng động, tích cực hơn.
+            </p>
+          </div>
+        </Grid>
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;

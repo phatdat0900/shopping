@@ -1,7 +1,7 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { sliderItems } from "./data";
 
 const Container = styled.div`
   width: 100%;
@@ -86,20 +86,28 @@ const Slider = () => {
       setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
   };
+  const [image, setImage] = useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      axios.get("/home").then((res) => {
+        setImage(res.data);
+      });
+    };
+    getData();
+  }, []);
+
   return (
     <Container>
       <Arrow direction="left" onClick={() => handleClick("left")}>
         <ArrowLeftOutlined></ArrowLeftOutlined>
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
-        {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
+        {image.map((item) => (
+          <Slide key={item.ProductID}>
             <ImgContainer>
-              <Image src={item.img} />
+              <Image src={item.url} />
             </ImgContainer>
             <InfoContainer>
-              <Title>{item.title}</Title>
-              <Description>{item.desc}</Description>
               <Button>XEM NGAY</Button>
             </InfoContainer>
           </Slide>

@@ -2,7 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./views/App";
 import reportWebVitals from "./reportWebVitals";
-
+import "./views/assets/boxicons-2.0.7/css/boxicons.min.css";
+import "./views/sass/index.scss";
+import Layout from "./views/components/Layout";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

@@ -1,19 +1,19 @@
-var mysql = require("mysql");
+const Sequelize = require("sequelize");
+const db = require("../../db");
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "shopping",
-});
-
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-  var sql =
-    "CREATE TABLE details(Detail_ID INTEGER  NOT NULL PRIMARY KEY,proID     INTEGER  NOT NULL,colorID   INTEGER  NOT NULL)";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("Table created");
-  });
+module.exports = db.define("Products", {
+  DetailID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  ProductID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  ColorID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
 });

@@ -1,19 +1,35 @@
-var mysql = require("mysql");
+const Sequelize = require("sequelize");
+const db = require("../../db");
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "shopping",
-});
-
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-  var sql =
-    "CREATE TABLE products( productID   INTEGER  NOT NULL PRIMARY KEY ,CateID      INTEGER  NOT NULL,rate        FLOAT NOT NULL,Price       INTEGER  NOT NULL,productName VARCHAR(35) NOT NULL,details     VARCHAR(55) NOT NULL,discount    INTEGER NOT NULL,createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)";
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("Table created");
-  });
+module.exports = db.define("Products", {
+  ProductID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  CateID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  Price: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  productName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  detail: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  discount: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  Rating: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
 });

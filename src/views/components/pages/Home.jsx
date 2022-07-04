@@ -1,22 +1,42 @@
-import React from "react";
-import Navbar from "../Navbar";
-import Annoucement from "../Annoucement";
+import { GridOffSharp } from "@material-ui/icons";
+import React, { useEffect, useState } from "react";
+
+import Main from "../Main";
+import Section, { SectionTitle, SectionBody } from "../Section";
+
 import Slider from "../Slider";
-import Categories from "../Categories";
-import Products from "../Products";
-import Newletter from "../Newletter";
-import Footer from "../Footer";
+import Grid from "../Grid";
+import axios from "axios";
+import ProductCard from "../ProductCard";
 const Home = () => {
+  const [product, setProduct] = useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      axios.get("/home_2").then((res) => {
+        setProduct(res.data);
+      });
+    };
+    getData();
+  }, []);
   return (
-    <div>
-      <Annoucement />
-      <Navbar />
+    <Main title="trang chủ">
       <Slider />
-      <Categories />
-      <Products />
-      <Newletter />
-      <Footer />
-    </div>
+      <Section>
+        <SectionTitle>top sản phẩm bán chạy trong tuần</SectionTitle>
+        <SectionBody>
+          <Grid col={4} mdCol={2} smCol={1} gap={20}>
+            {product.map((item, index) => (
+              <ProductCard
+                key={item.ProductID}
+                img={item.url}
+                ProductName={item.productName}
+                price={Number(item.Price)}
+              />
+            ))}
+          </Grid>
+        </SectionBody>
+      </Section>
+    </Main>
   );
 };
 
