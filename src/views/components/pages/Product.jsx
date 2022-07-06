@@ -1,34 +1,38 @@
-import { GridOffSharp } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
-
-import Main from "../Main";
-import Section, { SectionTitle, SectionBody } from "../Section";
-
-import Slider from "../Slider";
-import Grid from "../Grid";
+import { useParams } from "react-router-dom";
 import axios from "axios";
+import Main from "../Main";
+import Section, { SectionBody, SectionTitle } from "../Section";
+import Grid from "../Grid";
 import ProductCard from "../ProductCard";
-const Home = () => {
+import ProductView from "../ProductView";
+
+const Product = () => {
+  const { id } = useParams();
   const [product, setProduct] = useState([]);
   useEffect(() => {
     const getData = async () => {
-      axios.get("/home_2").then((res) => {
+      axios.get(`/product/item!=${id}`).then((res) => {
         setProduct(res.data);
       });
     };
     getData();
-  }, []);
+  }, [id]);
   return (
-    <Main title="trang chủ">
-      <Slider />
+    <Main title="thông tin chi tiết">
       <Section>
-        <SectionTitle>top sản phẩm bán chạy trong tuần</SectionTitle>
+        <SectionBody>
+          <ProductView />
+        </SectionBody>
+      </Section>
+      <Section>
+        <SectionTitle>Khám phá thêm</SectionTitle>
         <SectionBody>
           <Grid col={4} mdCol={2} smCol={1} gap={20}>
             {product.map((item, index) => (
               <ProductCard
-                id={item.ProductID}
-                key={item.ProductID}
+                id={Number(item.ProductID)}
+                key={index}
                 img={item.url}
                 ProductName={item.productName}
                 price={Number(item.Price)}
@@ -41,4 +45,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Product;

@@ -47,7 +47,7 @@ const Sidebar = () => {
         className="catalog__filter__widget__content__item"
         onClick={showSubnav}
       >
-        <h1>Nu</h1>
+        <h1>Nữ</h1>
         {subnav ? <ArrowDropDown /> : <ArrowDropUp />}
       </div>
       {subnav &&

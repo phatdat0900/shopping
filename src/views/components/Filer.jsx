@@ -7,7 +7,7 @@ const Filer = () => {
   const [product, setProduct] = useState([]);
   useEffect(() => {
     const getData = async () => {
-      axios.get("/catelog/Cate").then((res) => {
+      axios.get("/catelog").then((res) => {
         setProduct(res.data);
       });
     };
@@ -19,6 +19,7 @@ const Filer = () => {
         {product.map((item, index) => (
           <ProductCard
             key={item.ProductID}
+            id={item.ProductID}
             img={item.url}
             ProductName={item.productName}
             price={Number(item.Price)}

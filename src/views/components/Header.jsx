@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Dropdown from "../components/Dropdown";
 
-import logo from "../assets/images/Logo-2.png";
+import logo from "../assets/images/Picture3.png";
 
 const mainNav = [
   {
@@ -17,11 +18,30 @@ const mainNav = [
     path: "/accessories",
   },
 ];
+const DropdownItem = [
+  {
+    title: "Register",
+    path: "/Register",
+    cName: "dropdown-link",
+  },
+  {
+    title: "Login",
+    path: "/Login",
+    cName: "dropdown-link",
+  },
+];
 
 const Header = () => {
   const { pathname } = useLocation();
   const activeNav = mainNav.findIndex((e) => e.path === pathname);
-
+  const [dropDown, setDropDown] = useState(false);
+  const showdropDown = () => {
+    if (dropDown === false) {
+      setDropDown(true);
+    } else {
+      setDropDown(false);
+    }
+  };
   const headerRef = useRef(null);
 
   useEffect(() => {
@@ -80,9 +100,24 @@ const Header = () => {
                 <i className="bx bx-shopping-bag"></i>
               </Link>
             </div>
-            <div className="header__menu__item header__menu__right__item">
+            <div
+              className="header__menu__item header__menu__right__item"
+              onClick={showdropDown}
+            >
               <i className="bx bx-user"></i>
             </div>
+            {dropDown &&
+              DropdownItem.map((item, index) =>
+                item.gender == 1 ? (
+                  <Link
+                    className="catalog__filter__widget__content__item"
+                    key={index}
+                    to={`${item.path}`}
+                  >
+                    {item.title}
+                  </Link>
+                ) : null
+              )}
           </div>
         </div>
       </div>
