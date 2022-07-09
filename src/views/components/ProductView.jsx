@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Grid from "./Grid";
-import ProductCard from "./ProductCard";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import Button from "./Button";
 
 const ProductView = () => {
   const { id } = useParams();
-
-  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  const [cartData, setCartData] = useState([]);
   const [product, setProduct] = useState(1);
+  const [image, setImage] = useState([]);
   const [colors, setColor] = useState([]);
   const [sizes, setSize] = useState([]);
   const [onChangeColor, setOnChangeColor] = useState(undefined);
+  const [onChangeSize, setOnChangeSize] = useState(undefined);
   const [previewImg, setPreviewImg] = useState(undefined);
   const [descriptionExpand, setDescriptionExpand] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -28,7 +30,7 @@ const ProductView = () => {
   useEffect(() => {
     const getData = async () => {
       axios.get(`/product/item=${id}`).then((res) => {
-        setData(res.data);
+        setImage(res.data);
         setPreviewImg(res.data[0].url);
       });
       axios.get(`/product/getInfoitem${id}`).then((res) => {
@@ -45,11 +47,48 @@ const ProductView = () => {
     getData();
   }, [id]);
 
+  const check = () => {
+    if (onChangeColor === undefined) {
+      alert("Vui lòng chọn màu sắc!");
+      return false;
+    }
+
+    if (onChangeSize === undefined) {
+      alert("Vui lòng chọn kích cỡ!");
+      return false;
+    }
+
+    return true;
+  };
+
+  const addToCart = () => {
+    if (check()) {
+      let newItem = {
+        name: product.productName,
+        color: onChangeColor,
+        size: onChangeSize,
+        price: product.Price,
+        quantity: quantity,
+      };
+      console.log(newItem);
+    }
+  };
+  const goToCart = () => {
+    let newItem = {
+      name: product.productName,
+      color: onChangeColor,
+      size: onChangeSize,
+      price: product.Price,
+      quantity: quantity,
+    };
+    return navigate("/cart");
+  };
+
   return (
     <div className="product">
       <div className="product__images">
         <div className="product__images__list">
-          {data.map((item, index) => {
+          {image.map((item, index) => {
             if (onChangeColor === item.ColorID) {
               return (
                 <div
@@ -96,7 +135,7 @@ const ProductView = () => {
             {colors.map((item, index) => (
               <div
                 key={index}
-                className={`product__info__item__list__item `}
+                className="product__info__item__list__item"
                 onClick={() => {
                   setOnChangeColor(item.ColorID);
                 }}
@@ -118,7 +157,10 @@ const ProductView = () => {
                   return (
                     <div
                       key={index}
-                      className={`product__info__item__list__item`}
+                      className="product__info__item__list__item"
+                      onClick={() => {
+                        setOnChangeSize(item.size);
+                      }}
                     >
                       <span className="product__info__item__list__item__size">
                         {item.size}
@@ -151,8 +193,8 @@ const ProductView = () => {
           </div>
         </div>
         <div className="product__info__item">
-          <Button>thêm vào giỏ</Button>
-          <Button>mua ngay</Button>
+          <Button onClick={() => addToCart()}>thêm vào giỏ</Button>
+          <Button onClick={() => goToCart()}>mua ngay</Button>
         </div>
       </div>
     </div>
