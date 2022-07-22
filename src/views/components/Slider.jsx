@@ -65,8 +65,9 @@ const Title = styled.h1`
 
 const Description = styled.p`
   margin: 50px 0px;
+
   font-size: 20px;
-  font-weight: 500;
+
   letter-spacing: 3px;
 `;
 
@@ -107,7 +108,9 @@ const Slider = () => {
             <ImgContainer>
               <Image src={item.url} />
             </ImgContainer>
+
             <InfoContainer>
+              <Description>CHƯƠNG TRÌNH HÈ NĂNG ĐỘNG GIẢM GIÁ 10%</Description>
               <Button>XEM NGAY</Button>
             </InfoContainer>
           </Slide>

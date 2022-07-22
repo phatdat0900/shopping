@@ -4,6 +4,8 @@ import Button from "./Button";
 import { Link } from "react-router-dom";
 
 const ProductCard = (props) => {
+  const numberWithCommas = (num) =>
+    num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return (
     <div className="product-card">
       <Link to={`/product/item=${props.id}`}>
@@ -12,15 +14,15 @@ const ProductCard = (props) => {
         </div>
         <h3 className="product-card__name">{props.ProductName}</h3>
         <div className="product-card__price">
-          {props.price}
+          {numberWithCommas(props.price - (props.price * props.discount) / 100)}
           <span className="product-card__price__old">
-            <del>499000</del>
+            <del>{numberWithCommas(props.price)}</del>
           </span>
         </div>
       </Link>
       <div className="product-card__btn">
         <Button size="sm" icon="bx bx-cart" animate={true}>
-          chon mua
+          Xem chi tiêt
         </Button>
       </div>
     </div>
@@ -32,6 +34,7 @@ ProductCard.propTypes = {
   img: PropTypes.string.isRequired,
   ProductName: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  discount: PropTypes.number.isRequired,
 };
 
 export default ProductCard;

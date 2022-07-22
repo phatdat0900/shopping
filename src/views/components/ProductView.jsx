@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { addItem } from "../redux/CartItemSlide";
 import axios from "axios";
 import Button from "./Button";
 
 const ProductView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
-  const [cartData, setCartData] = useState([]);
+  const dispatch = useDispatch();
   const [product, setProduct] = useState(1);
   const [image, setImage] = useState([]);
   const [colors, setColor] = useState([]);
   const [sizes, setSize] = useState([]);
-  const [onChangeColor, setOnChangeColor] = useState(undefined);
+  const [onChangeColor, setOnChangeColor] = useState([]);
   const [onChangeSize, setOnChangeSize] = useState(undefined);
   const [previewImg, setPreviewImg] = useState(undefined);
   const [descriptionExpand, setDescriptionExpand] = useState(false);
@@ -26,19 +26,24 @@ const ProductView = () => {
       setQuantity(quantity - 1 < 1 ? 1 : quantity - 1);
     }
   };
+  const numberWithCommas = (num) =>
+    num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   useEffect(() => {
     const getData = async () => {
+      setOnChangeColor([]);
+      setOnChangeSize(undefined);
+      setQuantity(1);
       axios.get(`/product/item=${id}`).then((res) => {
         setImage(res.data);
         setPreviewImg(res.data[0].url);
       });
-      axios.get(`/product/getInfoitem${id}`).then((res) => {
+      axios.get(`/product/getInfoItem${id}`).then((res) => {
         setProduct(res.data[0]);
       });
       axios.get(`/product/getColor${id}`).then((res) => {
         setColor(res.data);
-        setOnChangeColor(res.data[0].ColorID);
+        setOnChangeColor(res.data[0]);
       });
       axios.get(`/product/getSize${id}`).then((res) => {
         setSize(res.data);
@@ -46,6 +51,10 @@ const ProductView = () => {
     };
     getData();
   }, [id]);
+
+  useEffect(() => {
+    console.log(product);
+  }, [product]);
 
   const check = () => {
     if (onChangeColor === undefined) {
@@ -63,25 +72,36 @@ const ProductView = () => {
 
   const addToCart = () => {
     if (check()) {
-      let newItem = {
-        name: product.productName,
-        color: onChangeColor,
-        size: onChangeSize,
-        price: product.Price,
-        quantity: quantity,
-      };
-      console.log(newItem);
+      dispatch(
+        addItem({
+          ID: product.ProductID,
+          name: product.productName,
+          color: onChangeColor.Name,
+          size: onChangeSize,
+          price: product.Price - (product.Price * product.discount) / 100,
+          quantity: quantity,
+          url: product.url,
+          orderID: null,
+        })
+      );
     }
   };
   const goToCart = () => {
-    let newItem = {
-      name: product.productName,
-      color: onChangeColor,
-      size: onChangeSize,
-      price: product.Price,
-      quantity: quantity,
-    };
-    return navigate("/cart");
+    if (check()) {
+      dispatch(
+        addItem({
+          ID: product.ProductID,
+          name: product.productName,
+          color: onChangeColor.Name,
+          size: onChangeSize,
+          price: product.Price - (product.Price * product.discount) / 100,
+          quantity: quantity,
+          url: product.url,
+          orderID: null,
+        })
+      );
+      return navigate("/cart");
+    }
   };
 
   return (
@@ -89,7 +109,7 @@ const ProductView = () => {
       <div className="product__images">
         <div className="product__images__list">
           {image.map((item, index) => {
-            if (onChangeColor === item.ColorID) {
+            if (onChangeColor.ColorID === item.ColorID) {
               return (
                 <div
                   className="product__images__list__item"
@@ -127,7 +147,11 @@ const ProductView = () => {
       <div className="product__info">
         <h1 className="product__info__title">{product.productName}</h1>
         <div className="product__info__item">
-          <span className="product__info__item__price">{product.Price}</span>
+          <span className="product__info__item__price">
+            {numberWithCommas(
+              product.Price - (product.Price * product.discount) / 100
+            ) + "đ"}
+          </span>
         </div>
         <div className="product__info__item">
           <div className="product__info__item__title">Màu sắc</div>
@@ -137,7 +161,7 @@ const ProductView = () => {
                 key={index}
                 className="product__info__item__list__item"
                 onClick={() => {
-                  setOnChangeColor(item.ColorID);
+                  setOnChangeColor(item);
                 }}
               >
                 <div
@@ -152,7 +176,7 @@ const ProductView = () => {
           <div className="product__info__item__title">Kích cỡ</div>
           <div className="product__info__item__list">
             {sizes.map((item, index) => {
-              if (onChangeColor === item.ColorID) {
+              if (onChangeColor.ColorID === item.ColorID) {
                 if (item.quantity !== 0) {
                   return (
                     <div

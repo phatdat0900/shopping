@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Button from "../Button";
 import axios from "axios";
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: white;
   display: flex;
@@ -13,6 +14,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   width: 40%;
+  height: 100vh;
   padding: 20px;
   background-color: white;
 `;
@@ -37,17 +39,17 @@ const Agreement = styled.span`
   font-size: 12px;
   margin: 20px 0px;
 `;
-const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+// const Button = styled.button`
+//   width: 40%;
+//   border: none;
+//   padding: 15px 20px;
+//   background-color: teal;
+//   color: white;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
 const Register = () => {
   const [registerInput, setRegister] = useState({
@@ -69,10 +71,11 @@ const Register = () => {
       email: registerInput.email,
       username: registerInput.username,
       password: registerInput.password,
-      confirm_pass: registerInput.confirm_pass,
     };
-    console.log(data);
-    axios.post("http://localhost:3001/Register", data).then((res) => {});
+
+    axios
+      .post("http://localhost:3001/register", data)
+      .then((res) => console.log(res));
   };
 
   return (
@@ -111,9 +114,10 @@ const Register = () => {
             value={registerInput.confirm_pass}
           />
           <Agreement>
-            Tôi đồng ý với ĐIỀU KHOẢN SỬ DỤNG và CHÍNH SÁCH BẢO MẬT CỦA WEAR.
+            Tôi đồng ý với ĐIỀU KHOẢN SỬ DỤNG và CHÍNH SÁCH BẢO MẬT CỦA FUKU
             <b>PRIVACY POLICY</b>
           </Agreement>
+
           <Button type="submit" onClick={registerSubmit}>
             ĐĂNG KÝ
           </Button>

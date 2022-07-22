@@ -84,6 +84,7 @@
           height: 50px;
           border-radius: 50%;
           border: 2px solid $txt-second-color;
+
           cursor: pointer;
           margin-right: 1rem;
 
@@ -93,7 +94,7 @@
           }
 
           &.active {
-            border-color: $main-color;
+            border-color: blue;
           }
 
           &:hover {

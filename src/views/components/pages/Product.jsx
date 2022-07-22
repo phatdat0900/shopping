@@ -36,6 +36,7 @@ const Product = () => {
                 img={item.url}
                 ProductName={item.productName}
                 price={Number(item.Price)}
+                discount={Number(item.discount)}
               />
             ))}
           </Grid>

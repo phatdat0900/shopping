@@ -1,5 +1,5 @@
 const User = require("../models/Users");
-
+const { QueryTypes } = require("sequelize");
 const allUsers = async (req, res) => {
   const users = await User.findAll({
     raw: true,
@@ -8,14 +8,19 @@ const allUsers = async (req, res) => {
 };
 
 const saveUser = async (req, res) => {
-  const { fullName, mail, userName, password } = await req.body;
+  const data = {
+    fullname: req.body.fullname,
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password,
+  };
+
   const user = await User.create({
-    fullName: fullName,
-    mail: mail,
-    userName: userName,
-    password: password,
+    fullName: data.fullname,
+    mail: data.email,
+    userName: data.username,
+    password: data.password,
   }).catch((error) => console.log(error));
-  res.redirect("/admin/user");
 };
 
 const getUser = async (req, res) => {
@@ -39,7 +44,7 @@ const editUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+
   const user = await User.destroy({
     where: {
       id: id,
@@ -47,11 +52,33 @@ const deleteUser = async (req, res) => {
   }).catch((error) => console.log(error));
   res.redirect("/admin/user");
 };
-
+const Login = async (req, res) => {
+  data = {
+    username: req.body.username,
+    password: req.body.password,
+  };
+  error = {
+    id: "WRONG_INFOR",
+    message: "ban nhap sai mat khau hoac sai username",
+  };
+  const user = await User.findOne({
+    where: {
+      userName: data.username,
+      password: data.password,
+    },
+    raw: true,
+  }).catch((error) => console.log(error));
+  if (user) {
+    res.send(user);
+  } else {
+    res.send(error);
+  }
+};
 module.exports = {
   allUsers,
   saveUser,
   getUser,
   editUser,
   deleteUser,
+  Login,
 };

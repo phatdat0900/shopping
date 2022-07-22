@@ -21,7 +21,7 @@ module.exports = db.define("Products", {
     allowNull: false,
   },
   detail: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
   },
   discount: {
@@ -30,6 +30,6 @@ module.exports = db.define("Products", {
   },
   Rating: {
     type: Sequelize.FLOAT,
-    allowNull: false,
+    allowNull: true,
   },
 });

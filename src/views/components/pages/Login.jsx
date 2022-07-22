@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../redux/AuthSlice";
+import Button from "../Button";
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: white;
   display: flex;
@@ -13,6 +17,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   width: 25%;
+  height: 100vh;
   padding: 20px;
   background-color: white;
 `;
@@ -33,18 +38,18 @@ const Input = styled.input`
   margin: 10px 0;
   padding: 10px;
 `;
-const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-`;
+// const Button = styled.button`
+//   width: 40%;
+//   border: none;
+//   padding: 15px 20px;
+//   background-color: teal;
+//   color: white;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   margin-bottom: 10px;
+// `;
 
 const Link = styled.a`
   margin: 5px 0px;
@@ -65,22 +70,31 @@ const Login = () => {
     setLogin({ ...loginInput, [e.target.name]: e.target.value });
   };
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const loginSubmit = (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
     const data = {
       username: loginInput.username,
       password: loginInput.password,
     };
-    // console.log(data);
-    axios.post("http://localhost:3001/Login", data).then((res) => {
-      if (res.data.message) {
-        console.log("hi");
-        // setLoginStatus(res.data.message);
-      } else {
-        setLoginStatus(res.data[0].username);
-      }
-      console.log(res);
-    });
+
+    axios
+      .post("/login", data)
+      .then((res) => {
+        setLoginStatus(res.data);
+        if (res.data.id !== "WRONG_INFOR") {
+          const user = {
+            ...res.data,
+          };
+
+          dispatch(logIn(user));
+          navigate("/");
+        }
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <Container>
@@ -99,12 +113,21 @@ const Login = () => {
             onChange={handleInput}
             value={loginInput.password}
           />
+          {loginStatus.id === "WRONG_INFOR" ? (
+            <div className="alert alert-danger">
+              <strong>{loginStatus.message}</strong>
+            </div>
+          ) : (
+            <p></p>
+          )}
+
           <Button type="submit" onClick={loginSubmit}>
             ĐĂNG NHẬP
           </Button>
 
           <Link>QUÊN MẬT KHẨU CỦA BẠN?</Link>
-          <Link href="/Register">TẠO TÀI KHOẢN </Link>
+
+          <Link href="/register">TẠO TÀI KHOẢN </Link>
         </Form>
       </Wrapper>
     </Container>
