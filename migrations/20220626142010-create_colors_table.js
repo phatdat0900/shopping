@@ -21,8 +21,4 @@ module.exports = {
       updatedAt: Sequelize.DATE,
     });
   },
-
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("colors");
-  },
 };

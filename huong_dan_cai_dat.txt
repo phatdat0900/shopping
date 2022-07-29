@@ -1,0 +1,13 @@
+thiết lập:
+npm install
+
+chạy server:
+node app.js
+chạy giao diện:
+npm start
+
+thiết lập database:
+tạo database : 'shopping'
+dựa theo các khai báo trong file db.js
+
+các câu lênh tạo bảng và dữ liệu:shopping.sql
