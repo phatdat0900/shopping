@@ -133,7 +133,6 @@ const addProduct = async (req, res) => {
     detail: req.body.detail,
     discount: req.body.discount,
   };
-  console.log(data);
 
   const product = await products
     .create({

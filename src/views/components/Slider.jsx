@@ -1,8 +1,7 @@
-import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import axios from "axios";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -57,10 +56,6 @@ const Image = styled.img`
 const InfoContainer = styled.div`
   flex: 1;
   padding: 50px;
-`;
-
-const Title = styled.h1`
-  font-size: 70px;
 `;
 
 const Description = styled.p`

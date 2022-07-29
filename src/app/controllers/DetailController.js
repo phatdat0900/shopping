@@ -33,7 +33,7 @@ ON details.ColorID=colors.colorID where products.ProductID = ${id};`,
 
 const addDetail = async (req, res) => {
   const data = req.body;
-  console.log(data);
+
   const detail = await details
     .bulkCreate(data)
     .then((data) => {

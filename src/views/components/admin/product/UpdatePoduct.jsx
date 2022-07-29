@@ -54,7 +54,6 @@ const UpdateProduct = () => {
         };
       });
       setDetails(detail);
-      console.log(detail);
     };
     getData();
   }, [id]);

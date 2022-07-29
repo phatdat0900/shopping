@@ -10,7 +10,6 @@ const ProductList = () => {
   useEffect(() => {
     const getProduct = async () => {
       axios.get(`/catelog/CateID=${id}`).then((res) => {
-        console.log(id);
         setProduct(res.data);
       });
     };

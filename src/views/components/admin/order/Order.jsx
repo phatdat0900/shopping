@@ -25,7 +25,7 @@ const Order = () => {
     const data = {
       id: ID,
     };
-    console.log(data);
+
     axios
       .post(`/admin/deleteOrderItem`, data)
       .then(axios.post(`/admin/deleteOrder`, data));

@@ -14,9 +14,11 @@ const add = async (req, res) => {
     phone: req.body.phone,
     address: req.body.address,
     totalPrice: req.body.totalPrice,
+    status: req.body.status,
   };
+
   db.query(
-    `INSERT INTO orders (userID, phone, address, totalPrice) VALUES (${data.userID},${data.phone},'${data.address}',${data.totalPrice})`,
+    `INSERT INTO orders (userID, phone, address, totalPrice,status) VALUES (${data.userID},${data.phone},'${data.address}',${data.totalPrice},${data.status})`,
     { type: QueryTypes.INSERT }
   )
     .then((data) => {

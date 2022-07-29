@@ -1,6 +1,6 @@
 import React from "react";
 import Filer from "./Filer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ProductList from "./ProductList";
 const Display = () => {
   return (

@@ -17,7 +17,7 @@ const addImg = async (req, res) => {
     detailID: req.body.detailID,
     url: req.body.url,
   };
-  console.log(data);
+
   db.query(
     `INSERT INTO images (DetailID, url) VALUES (${data.detailID},'${data.url}')`,
     { type: QueryTypes.INSERT }

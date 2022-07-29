@@ -5,11 +5,10 @@ const OrderItem = () => {
   const { id } = useParams();
   const history = useNavigate();
   const [orderItems, setOrderItems] = useState([]);
-  const [orderItems2, setOrderItems2] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       const data = await axios.get(`/admin/order/view/${id}`);
-      console.log(data.data);
       setOrderItems(data.data);
     };
     getData();

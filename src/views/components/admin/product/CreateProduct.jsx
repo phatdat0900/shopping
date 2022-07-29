@@ -25,7 +25,7 @@ const CreateProduct = () => {
       detail: productInput.detail,
       discount: productInput.discount,
     };
-    console.log(data);
+
     if (
       data.CateID &&
       data.productName &&

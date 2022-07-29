@@ -11,7 +11,6 @@ import MenuList from "@material-ui/core/MenuList";
 
 import logo from "../assets/images/Picture3.png";
 import { logOut } from "../redux/AuthSlice";
-import { deleteAllItem } from "../redux/CartItemSlide";
 
 const mainNav = [
   {

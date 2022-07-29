@@ -52,9 +52,7 @@ const ProductView = () => {
     getData();
   }, [id]);
 
-  useEffect(() => {
-    console.log(product);
-  }, [product]);
+  useEffect(() => {}, [product]);
 
   const check = () => {
     if (onChangeColor === undefined) {

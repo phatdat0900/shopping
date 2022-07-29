@@ -31,7 +31,7 @@ const ImgSize = () => {
       detailID: url.detailID,
       url: url.url,
     };
-    console.log(data);
+
     axios.post(`/admin/addImage`, data);
   };
 

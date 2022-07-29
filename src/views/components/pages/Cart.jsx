@@ -49,6 +49,7 @@ const Cart = () => {
       phone: submitInput.phone,
       address: submitInput.address,
       totalPrice: price,
+      status: 0,
     };
     axios
       .post("/order", data)
